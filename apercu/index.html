@@ -39,9 +39,10 @@
     color:var(--texte);background:var(--fond);min-height:100vh;
     -webkit-font-smoothing:antialiased;
   }
-  /* Image de fond (design Leonardo) */
-  body{background:#fbfcfd url(img/fond.jpg) center / cover fixed no-repeat}
-  .page{max-width:1200px;margin:0 auto;padding:24px 28px 36px}
+  /* Fond dessiné en code (vectoriel : net sur tous les écrans) */
+  body{background:#fbfcfd}
+  .fond{position:fixed;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none}
+  .page{max-width:1200px;margin:0 auto;padding:24px 28px 100px}
 
   /* ---------- Bandeau ---------- */
   .bandeau{
@@ -75,10 +76,6 @@
 
   .photo{position:relative;background:#cfd6de url(img/camion-debut.jpg) 50% 50% / cover no-repeat;overflow:hidden}
   .photo video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 55%}
-  .son{position:absolute;right:14px;bottom:14px;width:42px;height:42px;border-radius:50%;border:0;cursor:pointer;
-    background:rgba(11,37,69,.72);color:#fff;display:grid;place-items:center;backdrop-filter:blur(6px);transition:background .15s}
-  .son:hover{background:rgba(11,37,69,.92)}
-  .son svg{width:20px;height:20px}
   .lieu{position:absolute;left:16px;bottom:16px;font-size:13px;color:#fff;background:rgba(11,37,69,.72);padding:7px 13px;border-radius:999px;backdrop-filter:blur(6px);display:flex;gap:6px;align-items:center}
   .lieu svg{width:14px;height:14px}
 
@@ -129,6 +126,25 @@
   .toast.visible{opacity:1;transform:translate(-50%,0)}
   .toast svg{width:18px;height:18px;color:#69db7c}
 
+  /* ---------- Radio ---------- */
+  .radio{position:fixed;right:22px;bottom:22px;z-index:5;display:flex;align-items:center;gap:12px;
+    padding:8px 16px 8px 8px;border-radius:999px;background:var(--nuit);color:#fff;box-shadow:0 10px 30px rgba(11,37,69,.28)}
+  .radio-play{width:44px;height:44px;border-radius:50%;border:0;cursor:pointer;background:var(--vert);color:#fff;display:grid;place-items:center;flex:none;transition:transform .15s}
+  .radio-play:hover{transform:scale(1.06)}
+  .radio-play svg{width:20px;height:20px}
+  .radio-info{display:flex;flex-direction:column;line-height:1.15;min-width:0}
+  .radio-info small{font-size:11px;opacity:.65;text-transform:uppercase;letter-spacing:.08em;display:flex;align-items:center;gap:6px}
+  .radio select{appearance:none;-webkit-appearance:none;background:transparent;border:0;color:#fff;font:inherit;font-size:15px;font-weight:600;padding:0 18px 0 0;cursor:pointer;
+    background-image:linear-gradient(45deg,transparent 50%,#fff 50%),linear-gradient(135deg,#fff 50%,transparent 50%);
+    background-position:calc(100% - 7px) 55%,calc(100% - 2px) 55%;background-size:5px 5px;background-repeat:no-repeat}
+  .radio select option{color:#0f1f33}
+  .radio input[type=range]{width:90px;accent-color:var(--vert);cursor:pointer}
+  .eq{display:inline-flex;gap:2px;align-items:flex-end;height:10px}
+  .eq i{width:2px;height:3px;background:#69db7c;border-radius:1px}
+  .radio.joue .eq i{animation:eq .9s ease-in-out infinite}
+  .radio.joue .eq i:nth-child(2){animation-delay:.2s}.radio.joue .eq i:nth-child(3){animation-delay:.4s}
+  @keyframes eq{0%,100%{height:3px}50%{height:10px}}
+
   @media (max-width:1000px){
     .grille{grid-template-columns:repeat(2,1fr)}
     .bandeau{grid-template-columns:1fr}
@@ -147,11 +163,37 @@
     .jours{width:100%;margin-left:0}
     .jour{flex:1}
     .heure{font-size:40px}
+    .radio{left:14px;right:14px;bottom:14px;justify-content:space-between}
+    .page{padding-bottom:90px}
   }
   @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
+<svg class="fond" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+  <defs>
+    <linearGradient id="fHautA" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#dfe8f3"/><stop offset="1" stop-color="#f4f7fb"/></linearGradient>
+    <linearGradient id="fHautB" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#eaf0f7"/><stop offset="1" stop-color="#eaf0f7" stop-opacity="0"/></linearGradient>
+    <linearGradient id="fVert" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#eef6ec" stop-opacity="0"/><stop offset=".55" stop-color="#e3f1df"/><stop offset="1" stop-color="#d6ead2"/></linearGradient>
+    <linearGradient id="fBleuClair" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#e9eff6" stop-opacity="0"/><stop offset=".6" stop-color="#e2eaf3"/><stop offset="1" stop-color="#d3dfec"/></linearGradient>
+    <linearGradient id="fNuit" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2c5a8c"/><stop offset="1" stop-color="#0b2545"/></linearGradient>
+    <linearGradient id="fLigneBleue" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#7f9bbd" stop-opacity=".55"/><stop offset="1" stop-color="#7f9bbd" stop-opacity="0"/></linearGradient>
+    <linearGradient id="fLigneVerte" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#7fae87" stop-opacity="0"/><stop offset=".5" stop-color="#6aa874" stop-opacity=".55"/><stop offset="1" stop-color="#9cc4a3" stop-opacity=".25"/></linearGradient>
+    <path id="lHaut" d="M-40 190 C 160 170, 330 120, 470 -10" fill="none" stroke="url(#fLigneBleue)" stroke-width="1"/>
+    <path id="lBas" d="M520 760 C 820 840, 1100 760, 1300 690 S 1560 600, 1660 560" fill="none" stroke="url(#fLigneVerte)" stroke-width="1"/>
+  </defs>
+  <!-- en haut à gauche : vagues bleu clair -->
+  <path d="M0 0 H520 C 470 120, 330 200, 120 230 C 70 237, 30 240, 0 242 Z" fill="url(#fHautA)" opacity=".9"/>
+  <path d="M0 0 H360 C 300 90, 180 130, 0 150 Z" fill="url(#fHautB)"/>
+  <g><use href="#lHaut"/><use href="#lHaut" y="7"/><use href="#lHaut" y="14"/><use href="#lHaut" y="21"/><use href="#lHaut" y="28"/><use href="#lHaut" y="35"/><use href="#lHaut" y="42"/></g>
+  <!-- en bas à droite : vague verte, vague bleu clair, vague bleu nuit -->
+  <path d="M640 900 C 900 860, 1150 760, 1330 640 C 1440 568, 1530 520, 1600 500 V900 Z" fill="url(#fVert)"/>
+  <path d="M900 900 C 1120 870, 1320 800, 1460 720 C 1520 686, 1565 668, 1600 660 V900 Z" fill="url(#fBleuClair)"/>
+  <path d="M1230 900 C 1380 870, 1480 820, 1600 740 V900 Z" fill="url(#fNuit)"/>
+  <g><use href="#lBas"/><use href="#lBas" y="8"/><use href="#lBas" y="16"/><use href="#lBas" y="24"/><use href="#lBas" y="32"/><use href="#lBas" y="40"/><use href="#lBas" y="48"/></g>
+  <!-- en bas à gauche : une touche de bleu nuit -->
+  <path d="M0 790 C 90 800, 170 840, 240 900 H0 Z" fill="url(#fNuit)" opacity=".9"/>
+</svg>
 <div class="page">
 
   <!-- ===================== BANDEAU ===================== -->
@@ -172,8 +214,7 @@
       </div>
     </div>
     <div class="photo">
-      <video id="video" src="img/camion.mp4" poster="img/camion-debut.jpg" muted playsinline preload="auto" aria-label="Le camion Énergie+ qui arrive"></video>
-      <button class="son" id="son" type="button" title="Son du camion" aria-label="Son du camion"></button>
+      <video id="video" src="img/camion.mp4" poster="img/camion-debut.jpg" autoplay muted loop playsinline preload="auto" aria-label="Le camion Énergie+ qui arrive"></video>
       <span class="lieu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>Drôme · Isère · Ardèche</span>
     </div>
   </header>
@@ -256,6 +297,16 @@
   </footer>
 </div>
 
+<!-- ===================== RADIO ===================== -->
+<div class="radio" id="radio">
+  <button class="radio-play" id="radio-play" type="button" aria-label="Allumer la radio"></button>
+  <div class="radio-info">
+    <small><span class="eq" aria-hidden="true"><i></i><i></i><i></i></span><span id="radio-etat">Radio</span></small>
+    <select id="radio-station" aria-label="Choisir la radio"></select>
+  </div>
+  <input type="range" id="radio-volume" min="0" max="100" step="1" aria-label="Volume">
+</div>
+
 <div class="toast" id="toast" role="status" aria-live="polite">
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
   <span id="toast-texte">Copié !</span>
@@ -330,21 +381,101 @@
   chargerMeteo();
   setInterval(chargerMeteo, 30 * 60 * 1000);
 
-  /* ---------- Vidéo du camion ----------
-     À l'ouverture : un passage avec le son (si le navigateur l'autorise), puis en boucle sans le son.
-     Le bouton haut-parleur remet le son quand on veut. */
-  var video = $('video'), son = $('son');
-  var ICO_SON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" fill="currentColor"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>';
-  var ICO_MUET = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" fill="currentColor"/><path d="m22 9-6 6"/><path d="m16 9 6 6"/></svg>';
-  function majBouton(){ son.innerHTML = video.muted ? ICO_MUET : ICO_SON; }
-  video.addEventListener('ended', function(){ video.muted = true; majBouton(); video.currentTime = 0; video.play().catch(function(){}); });
-  son.addEventListener('click', function(){
-    if (video.muted) { video.muted = false; video.currentTime = 0; } else { video.muted = true; }
-    video.play().catch(function(){}); majBouton();
+  /* ---------- Radio ----------
+     Pour ajouter une radio : une ligne de plus dans RADIOS (nom affiché, adresses du flux en https,
+     et le nom à chercher dans l'annuaire libre radio-browser.info si les adresses ne marchent plus). */
+  var RADIOS = [
+    { nom:'Nostalgie', flux:['https://scdn.nrjaudio.fm/adwz2/fr/30601/mp3_128.mp3?origine=fluxradios'], cherche:'Nostalgie' },
+    { nom:'Chérie FM', flux:['https://scdn.nrjaudio.fm/adwz2/fr/30201/mp3_128.mp3?origine=fluxradios'], cherche:'Cherie FM' },
+    { nom:'RFM', flux:[], cherche:'RFM' },
+    { nom:'FIP', flux:['https://icecast.radiofrance.fr/fip-midfi.mp3','https://icecast.radiofrance.fr/fip-hifi.aac'], cherche:'FIP' },
+    { nom:'ici Drôme Ardèche', flux:['https://icecast.radiofrance.fr/francebleudromeardeche-midfi.mp3'], cherche:'Drome Ardeche' }
+  ];
+  var ICO_PLAY = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.5-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5z"/></svg>';
+  var ICO_PAUSE = '<svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="4" height="14" rx="1.2"/><rect x="14" y="5" width="4" height="14" rx="1.2"/></svg>';
+  var radio = new Audio(); radio.preload = 'none';
+  var boite = $('radio'), bouton = $('radio-play'), choix = $('radio-station'), volume = $('radio-volume'), etat = $('radio-etat');
+  function lire(cle, defaut){ try { var v = localStorage.getItem('radio-' + cle); return v === null ? defaut : JSON.parse(v); } catch(e){ return defaut; } }
+  function garder(cle, v){ try { localStorage.setItem('radio-' + cle, JSON.stringify(v)); } catch(e){} }
+
+  var reglages = { allumee: lire('allumee', true), station: lire('station', 0), volume: lire('volume', 25) };
+  if (!RADIOS[reglages.station]) reglages.station = 0;
+  RADIOS.forEach(function(r, i){ var o = document.createElement('option'); o.value = i; o.textContent = r.nom; choix.appendChild(o); });
+  choix.value = reglages.station; volume.value = reglages.volume; radio.volume = reglages.volume / 100;
+
+  var candidats = [], essai = 0, tentative = 0, minuteurRadio;
+  function afficher(joue, texte){
+    boite.classList.toggle('joue', joue);
+    bouton.innerHTML = joue ? ICO_PAUSE : ICO_PLAY;
+    bouton.setAttribute('aria-label', joue ? 'Couper la radio' : 'Allumer la radio');
+    etat.textContent = texte || (joue ? 'En direct' : 'Radio');
+  }
+  function chercherAnnuaire(nom){
+    var serveurs = ['https://de1.api.radio-browser.info','https://fi1.api.radio-browser.info','https://de2.api.radio-browser.info'];
+    var chemin = '/json/stations/search?countrycode=FR&hidebroken=true&order=clickcount&reverse=true&limit=6&name=' + encodeURIComponent(nom);
+    function suivant(k){
+      if (k >= serveurs.length) return Promise.resolve([]);
+      return fetch(serveurs[k] + chemin).then(function(r){ return r.json(); })
+        .then(function(l){ return l.map(function(x){ return x.url_resolved || x.url; }).filter(function(u){ return /^https:/.test(u); }); })
+        .catch(function(){ return suivant(k + 1); });
+    }
+    return suivant(0);
+  }
+  function essayer(numero){
+    if (numero !== tentative) return;
+    clearTimeout(minuteurRadio);
+    if (essai >= candidats.length) { afficher(false, 'Radio indisponible'); return; }
+    enLecture = false;
+    radio.src = candidats[essai];
+    afficher(true, 'Connexion…');
+    minuteurRadio = setTimeout(function(){ if (numero === tentative && radio.paused === false && radio.readyState < 3) { essai++; essayer(numero); } }, 9000);
+    radio.play().then(function(){ if (numero === tentative) afficher(true); }).catch(function(err){
+      if (numero !== tentative) return;
+      clearTimeout(minuteurRadio);
+      if (err && err.name === 'NotAllowedError') { afficher(false, 'Clic pour la musique'); attendreClic(); return; }
+      essai++; essayer(numero);
+    });
+  }
+  var enLecture = false;
+  // Coupure en pleine écoute (internet qui saute…) : on se reconnecte tout seul.
+  radio.addEventListener('error', function(){ if (enLecture && reglages.allumee) { enLecture = false; afficher(true, 'Reconnexion…'); setTimeout(allumer, 3000); } });
+  radio.addEventListener('playing', function(){ enLecture = true; clearTimeout(minuteurRadio); afficher(true); });
+  function allumer(){
+    tentative++; var numero = tentative; essai = 0;
+    var r = RADIOS[reglages.station];
+    candidats = r.flux.slice();
+    afficher(true, 'Connexion…');
+    chercherAnnuaire(r.cherche).then(function(liste){
+      if (numero !== tentative) return;
+      liste.forEach(function(u){ if (candidats.indexOf(u) < 0) candidats.push(u); });
+      if (radio.paused && essai >= r.flux.length) essayer(numero);
+    });
+    if (candidats.length) essayer(numero);
+  }
+  function eteindre(){ tentative++; enLecture = false; clearTimeout(minuteurRadio); radio.pause(); radio.removeAttribute('src'); radio.load(); afficher(false); }
+  var attente = false;
+  function attendreClic(){
+    if (attente) return; attente = true;
+    function go(e){
+      document.removeEventListener('pointerdown', go, true); document.removeEventListener('keydown', go, true); attente = false;
+      if (reglages.allumee && !(e.target && e.target.closest && e.target.closest('#radio'))) allumer();
+    }
+    document.addEventListener('pointerdown', go, true); document.addEventListener('keydown', go, true);
+  }
+  bouton.addEventListener('click', function(){
+    reglages.allumee = !boite.classList.contains('joue');
+    garder('allumee', reglages.allumee);
+    reglages.allumee ? allumer() : eteindre();
   });
-  video.muted = false;
-  video.play().catch(function(){ video.muted = true; video.play().catch(function(){}); }).then(majBouton);
-  majBouton();
+  choix.addEventListener('change', function(){
+    reglages.station = +choix.value; garder('station', reglages.station);
+    reglages.allumee = true; garder('allumee', true); allumer();
+  });
+  volume.addEventListener('input', function(){
+    reglages.volume = +volume.value; radio.volume = reglages.volume / 100; garder('volume', reglages.volume);
+  });
+  afficher(false);
+  if (reglages.allumee) allumer();
 
   /* ---------- Boutons « copier » ---------- */
   var minuteur;
