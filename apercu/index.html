@@ -144,6 +144,8 @@
   .radio.joue .eq i{animation:eq .9s ease-in-out infinite}
   .radio.joue .eq i:nth-child(2){animation-delay:.2s}.radio.joue .eq i:nth-child(3){animation-delay:.4s}
   @keyframes eq{0%,100%{height:3px}50%{height:10px}}
+  .radio.invite .radio-play{animation:invite 1.6s ease-in-out infinite}
+  @keyframes invite{0%,100%{box-shadow:0 0 0 0 rgba(46,170,63,.6)}50%{box-shadow:0 0 0 10px rgba(46,170,63,0)}}
 
   @media (max-width:1000px){
     .grille{grid-template-columns:repeat(2,1fr)}
@@ -399,12 +401,10 @@
      Pour ajouter une radio : une ligne de plus dans RADIOS (nom affiché, adresses du flux en https,
      et le nom à chercher dans l'annuaire libre radio-browser.info si les adresses ne marchent plus). */
   var RADIOS = [
-    { nom:'Nostalgie', flux:['https://streaming.nrjaudio.fm/oug7girb92oc?origine=fluxradios'], cherche:'Nostalgie France' },
-    { nom:'Chérie FM', flux:['https://streaming.nrjaudio.fm/ouuku85n3nje?origine=fluxradios','https://scdn.nrjaudio.fm/adwz2/fr/30201/mp3_128.mp3?origine=fluxradios'], cherche:'Cherie FM' },
-    { nom:'RFM', flux:['https://stream.rfm.fr/rfm.mp3','https://rfm.lmn.fm/rfm.mp3'], cherche:'RFM' },
     { nom:'Skyrock', flux:['https://icecast.skyrock.net/s/natio_mp3_128k','https://icecast.skyrock.net/s/natio_aac_128k'], cherche:'Skyrock' },
-    { nom:'FIP', flux:['https://icecast.radiofrance.fr/fip-midfi.mp3','https://icecast.radiofrance.fr/fip-hifi.aac','https://direct.fipradio.fr/live/fip-midfi.mp3'], cherche:'FIP' },
-    { nom:'ici Drôme Ardèche', flux:['https://icecast.radiofrance.fr/francebleudromeardeche-midfi.mp3'], cherche:'Drome Ardeche' }
+    { nom:'Chérie FM', flux:['https://streaming.nrjaudio.fm/ouuku85n3nje?origine=fluxradios'], cherche:'Cherie FM' },
+    { nom:'Nostalgie', flux:['https://streaming.nrjaudio.fm/oug7girb92oc?origine=fluxradios'], cherche:'Nostalgie France' },
+    { nom:'Rire & Chansons', flux:['https://streaming.nrjaudio.fm/ou8o8xgk7oiu?origine=fluxradios'], cherche:'Rire et Chansons' }
   ];
   var ICO_PLAY = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.5-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5z"/></svg>';
   var ICO_PAUSE = '<svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="4" height="14" rx="1.2"/><rect x="14" y="5" width="4" height="14" rx="1.2"/></svg>';
@@ -413,7 +413,8 @@
   function lire(cle, defaut){ try { var v = localStorage.getItem('radio-' + cle); return v === null ? defaut : JSON.parse(v); } catch(e){ return defaut; } }
   function garder(cle, v){ try { localStorage.setItem('radio-' + cle, JSON.stringify(v)); } catch(e){} }
 
-  var reglages = { allumee: lire('allumee', true), station: lire('station', 0), volume: lire('volume', 25) };
+  // À chaque ouverture : Skyrock, et la radio se lance toute seule. Seul le volume est retenu.
+  var reglages = { allumee: true, station: 0, volume: lire('volume', 25) };
   if (!RADIOS[reglages.station]) reglages.station = 0;
   RADIOS.forEach(function(r, i){ var o = document.createElement('option'); o.value = i; o.textContent = r.nom; choix.appendChild(o); });
   choix.value = reglages.station; volume.value = reglages.volume; radio.volume = reglages.volume / 100;
@@ -447,14 +448,14 @@
     radio.play().then(function(){ if (numero === tentative) afficher(true); }).catch(function(err){
       if (numero !== tentative) return;
       clearTimeout(minuteurRadio);
-      if (err && err.name === 'NotAllowedError') { afficher(false, 'Clic pour la musique'); attendreClic(); return; }
+      if (err && err.name === 'NotAllowedError') { afficher(false, 'Cliquez pour la musique'); boite.classList.add('invite'); attendreClic(); return; }
       essai++; essayer(numero);
     });
   }
   var enLecture = false;
   // Coupure en pleine écoute (internet qui saute…) : on se reconnecte tout seul.
   radio.addEventListener('error', function(){ if (enLecture && reglages.allumee) { enLecture = false; afficher(true, 'Reconnexion…'); setTimeout(allumer, 3000); } });
-  radio.addEventListener('playing', function(){ enLecture = true; clearTimeout(minuteurRadio); afficher(true); });
+  radio.addEventListener('playing', function(){ enLecture = true; boite.classList.remove('invite'); clearTimeout(minuteurRadio); afficher(true); });
   function allumer(){
     tentative++; var numero = tentative; essai = 0;
     var r = RADIOS[reglages.station];
@@ -473,18 +474,17 @@
     if (attente) return; attente = true;
     function go(e){
       document.removeEventListener('pointerdown', go, true); document.removeEventListener('keydown', go, true); attente = false;
-      if (reglages.allumee && !(e.target && e.target.closest && e.target.closest('#radio'))) allumer();
+      if (reglages.allumee && !(e.target && e.target.closest && e.target.closest('#radio-play, #radio-station'))) allumer();
     }
     document.addEventListener('pointerdown', go, true); document.addEventListener('keydown', go, true);
   }
   bouton.addEventListener('click', function(){
     reglages.allumee = !boite.classList.contains('joue');
-    garder('allumee', reglages.allumee);
     reglages.allumee ? allumer() : eteindre();
   });
   choix.addEventListener('change', function(){
-    reglages.station = +choix.value; garder('station', reglages.station);
-    reglages.allumee = true; garder('allumee', true); allumer();
+    reglages.station = +choix.value;
+    reglages.allumee = true; allumer();
   });
   volume.addEventListener('input', function(){
     reglages.volume = +volume.value; radio.volume = reglages.volume / 100; garder('volume', reglages.volume);
