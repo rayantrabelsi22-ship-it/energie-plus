@@ -39,9 +39,8 @@
     color:var(--texte);background:var(--fond);min-height:100vh;
     -webkit-font-smoothing:antialiased;
   }
-  /* Image de fond optionnelle (ex. design Leonardo) : déposer img/fond.jpg et décommenter
-  body{background:var(--fond) url(img/fond.jpg) center top / cover fixed no-repeat}
-  */
+  /* Image de fond (design Leonardo) */
+  body{background:#fbfcfd url(img/fond.jpg) center / cover fixed no-repeat}
   .page{max-width:1200px;margin:0 auto;padding:24px 28px 36px}
 
   /* ---------- Bandeau ---------- */
@@ -74,7 +73,12 @@
   .jour .mm{font-weight:600;font-size:13px;color:var(--texte)}
   .jour .mm span{color:var(--doux);font-weight:400}
 
-  .photo{position:relative;background:#cfd6de url(img/camion.jpg) 50% 50% / cover no-repeat}
+  .photo{position:relative;background:#cfd6de url(img/camion-debut.jpg) 50% 50% / cover no-repeat;overflow:hidden}
+  .photo video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 55%}
+  .son{position:absolute;right:14px;bottom:14px;width:42px;height:42px;border-radius:50%;border:0;cursor:pointer;
+    background:rgba(11,37,69,.72);color:#fff;display:grid;place-items:center;backdrop-filter:blur(6px);transition:background .15s}
+  .son:hover{background:rgba(11,37,69,.92)}
+  .son svg{width:20px;height:20px}
   .lieu{position:absolute;left:16px;bottom:16px;font-size:13px;color:#fff;background:rgba(11,37,69,.72);padding:7px 13px;border-radius:999px;backdrop-filter:blur(6px);display:flex;gap:6px;align-items:center}
   .lieu svg{width:14px;height:14px}
 
@@ -167,7 +171,9 @@
         </div>
       </div>
     </div>
-    <div class="photo" role="img" aria-label="Le camion Énergie+">
+    <div class="photo">
+      <video id="video" src="img/camion.mp4" poster="img/camion-debut.jpg" muted playsinline preload="auto" aria-label="Le camion Énergie+ qui arrive"></video>
+      <button class="son" id="son" type="button" title="Son du camion" aria-label="Son du camion"></button>
       <span class="lieu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>Drôme · Isère · Ardèche</span>
     </div>
   </header>
@@ -199,7 +205,7 @@
 
       <button class="tuile copier orange" data-copier="https://www.energiecvc.com/devis-gratuit" type="button">
         <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></span>
-        <span><h3>Lien du devis gratuit</h3><p>Un clic pour le copier, puis le coller dans un SMS.</p></span>
+        <span><h3>Lien du formulaire</h3><p>Un clic pour le copier, puis le coller dans un SMS.</p></span>
       </button>
 
       <a class="tuile rose" href="https://business.google.com/" target="_blank" rel="noopener">
@@ -224,28 +230,18 @@
 
   <!-- ===================== MARKETING ===================== -->
   <section class="rubrique">
-    <div class="rubrique-titre"><h2>Marketing</h2><p>Vidéos, réseaux et site</p></div>
+    <div class="rubrique-titre"><h2>Marketing</h2><p>Les vidéos et le site</p></div>
     <div class="grille">
 
-      <a class="tuile nuit" href="https://www.tiktok.com/tiktokstudio" target="_blank" rel="noopener">
+      <a class="tuile grande nuit" href="https://www.tiktok.com/tiktokstudio" target="_blank" rel="noopener">
         <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V2a5 5 0 0 0 5 5"/></svg></span>
         <span><h3>TikTok Studio</h3><p>Publier et voir les stats.</p></span>
         <svg class="fleche" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg>
       </a>
 
-      <a class="tuile violet" href="https://elevenlabs.io/app" target="_blank" rel="noopener">
-        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><path d="M12 19v3"/></svg></span>
-        <span><h3>ElevenLabs</h3><p>Les voix des vidéos.</p></span>
-        <svg class="fleche" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg>
-      </a>
 
-      <a class="tuile orange" href="https://app.leonardo.ai/" target="_blank" rel="noopener">
-        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.09-3.09a2 2 0 0 0-2.82 0L6 21"/></svg></span>
-        <span><h3>Leonardo</h3><p>Les images générées.</p></span>
-        <svg class="fleche" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg>
-      </a>
 
-      <a class="tuile bleu" href="https://hpanel.hostinger.com/" target="_blank" rel="noopener">
+      <a class="tuile grande bleu" href="https://hpanel.hostinger.com/" target="_blank" rel="noopener">
         <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></span>
         <span><h3>Modifier le site</h3><p>Hostinger.</p></span>
         <svg class="fleche" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg>
@@ -333,6 +329,22 @@
   }
   chargerMeteo();
   setInterval(chargerMeteo, 30 * 60 * 1000);
+
+  /* ---------- Vidéo du camion ----------
+     À l'ouverture : un passage avec le son (si le navigateur l'autorise), puis en boucle sans le son.
+     Le bouton haut-parleur remet le son quand on veut. */
+  var video = $('video'), son = $('son');
+  var ICO_SON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" fill="currentColor"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>';
+  var ICO_MUET = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" fill="currentColor"/><path d="m22 9-6 6"/><path d="m16 9 6 6"/></svg>';
+  function majBouton(){ son.innerHTML = video.muted ? ICO_MUET : ICO_SON; }
+  video.addEventListener('ended', function(){ video.muted = true; majBouton(); video.currentTime = 0; video.play().catch(function(){}); });
+  son.addEventListener('click', function(){
+    if (video.muted) { video.muted = false; video.currentTime = 0; } else { video.muted = true; }
+    video.play().catch(function(){}); majBouton();
+  });
+  video.muted = false;
+  video.play().catch(function(){ video.muted = true; video.play().catch(function(){}); }).then(majBouton);
+  majBouton();
 
   /* ---------- Boutons « copier » ---------- */
   var minuteur;
