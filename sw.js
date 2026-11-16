@@ -1,10 +1,10 @@
 // Hub Énergie+ : permet d'installer l'application et de l'ouvrir même sans connexion.
 // Toujours la version en ligne d'abord (les mises à jour arrivent toutes seules),
 // la copie gardée en mémoire seulement si internet est coupé.
-const CACHE = 'energie-plus-v4';
-const FICHIERS = ['./', 'index.html', 'manifest.webmanifest', 'favicon.ico',
-  'icons/icon-192.png', 'icons/icon-512.png', 'icons/icon-maskable-512.png',
-  'icons/apple-touch-icon.png', 'icons/favicon-32.png',
+const CACHE = 'energie-plus-v5';
+const FICHIERS = ['./', 'index.html', 'manifest.webmanifest?v=4', 'favicon.ico',
+  'icons/icon-192-v4.png', 'icons/icon-512-v4.png', 'icons/icon-maskable-512-v4.png',
+  'icons/apple-touch-icon-v4.png', 'icons/favicon-32.png',
   'img/logo.webp', 'img/camion-debut.jpg', 'img/fond.jpg', 'fonts/outfit-latin.woff2', 'fonts/outfit-latin-ext.woff2'];
 
 self.addEventListener('install', (e) => {
