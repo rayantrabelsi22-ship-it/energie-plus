@@ -180,8 +180,22 @@
     <linearGradient id="fLigneBleue" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#7f9bbd" stop-opacity=".55"/><stop offset="1" stop-color="#7f9bbd" stop-opacity="0"/></linearGradient>
     <linearGradient id="fLigneVerte" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#7fae87" stop-opacity="0"/><stop offset=".5" stop-color="#6aa874" stop-opacity=".55"/><stop offset="1" stop-color="#9cc4a3" stop-opacity=".25"/></linearGradient>
     <path id="lHaut" d="M-40 190 C 160 170, 330 120, 470 -10" fill="none" stroke="url(#fLigneBleue)" stroke-width="1"/>
+    <linearGradient id="fTraitVert" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#5fa86b" stop-opacity="0"/><stop offset=".25" stop-color="#5fa86b" stop-opacity=".45"/><stop offset=".7" stop-color="#4f9e5d" stop-opacity=".55"/><stop offset="1" stop-color="#8cc497" stop-opacity=".1"/></linearGradient>
+    <linearGradient id="fTraitBleu" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#6d8db3" stop-opacity="0"/><stop offset=".4" stop-color="#6d8db3" stop-opacity=".35"/><stop offset="1" stop-color="#6d8db3" stop-opacity="0"/></linearGradient>
+    <path id="tMilieu" d="M-60 640 C 260 700, 520 600, 800 520 S 1300 330, 1680 300" fill="none" stroke="url(#fTraitVert)" stroke-width=".9"/>
+    <path id="tMilieu2" d="M-60 300 C 300 360, 600 470, 900 470 S 1400 380, 1680 460" fill="none" stroke="url(#fTraitBleu)" stroke-width=".8"/>
     <path id="lBas" d="M520 760 C 820 840, 1100 760, 1300 690 S 1560 600, 1660 560" fill="none" stroke="url(#fLigneVerte)" stroke-width="1"/>
   </defs>
+  <!-- les fins traits qui traversent l'écran -->
+  <g id="faisceau">
+    <use href="#tMilieu"/><use href="#tMilieu" y="5" x="6"/><use href="#tMilieu" y="10" x="12"/><use href="#tMilieu" y="15" x="18"/>
+    <use href="#tMilieu" y="20" x="24"/><use href="#tMilieu" y="25" x="30"/><use href="#tMilieu" y="30" x="36"/><use href="#tMilieu" y="35" x="42"/>
+    <use href="#tMilieu" y="40" x="48"/><use href="#tMilieu" y="45" x="54"/><use href="#tMilieu" y="50" x="60"/><use href="#tMilieu" y="55" x="66"/>
+    <use href="#tMilieu" y="60" x="72"/><use href="#tMilieu" y="65" x="78"/><use href="#tMilieu" y="70" x="84"/><use href="#tMilieu" y="75" x="90"/>
+  </g>
+  <g>
+    <use href="#tMilieu2"/><use href="#tMilieu2" y="6"/><use href="#tMilieu2" y="12"/><use href="#tMilieu2" y="18"/><use href="#tMilieu2" y="24"/><use href="#tMilieu2" y="30"/>
+  </g>
   <!-- en haut à gauche : vagues bleu clair -->
   <path d="M0 0 H520 C 470 120, 330 200, 120 230 C 70 237, 30 240, 0 242 Z" fill="url(#fHautA)" opacity=".9"/>
   <path d="M0 0 H360 C 300 90, 180 130, 0 150 Z" fill="url(#fHautB)"/>
@@ -385,10 +399,11 @@
      Pour ajouter une radio : une ligne de plus dans RADIOS (nom affiché, adresses du flux en https,
      et le nom à chercher dans l'annuaire libre radio-browser.info si les adresses ne marchent plus). */
   var RADIOS = [
-    { nom:'Nostalgie', flux:['https://scdn.nrjaudio.fm/adwz2/fr/30601/mp3_128.mp3?origine=fluxradios'], cherche:'Nostalgie' },
-    { nom:'Chérie FM', flux:['https://scdn.nrjaudio.fm/adwz2/fr/30201/mp3_128.mp3?origine=fluxradios'], cherche:'Cherie FM' },
-    { nom:'RFM', flux:[], cherche:'RFM' },
-    { nom:'FIP', flux:['https://icecast.radiofrance.fr/fip-midfi.mp3','https://icecast.radiofrance.fr/fip-hifi.aac'], cherche:'FIP' },
+    { nom:'Nostalgie', flux:['https://streaming.nrjaudio.fm/oug7girb92oc?origine=fluxradios'], cherche:'Nostalgie France' },
+    { nom:'Chérie FM', flux:['https://streaming.nrjaudio.fm/ouuku85n3nje?origine=fluxradios','https://scdn.nrjaudio.fm/adwz2/fr/30201/mp3_128.mp3?origine=fluxradios'], cherche:'Cherie FM' },
+    { nom:'RFM', flux:['https://stream.rfm.fr/rfm.mp3','https://rfm.lmn.fm/rfm.mp3'], cherche:'RFM' },
+    { nom:'Skyrock', flux:['https://icecast.skyrock.net/s/natio_mp3_128k','https://icecast.skyrock.net/s/natio_aac_128k'], cherche:'Skyrock' },
+    { nom:'FIP', flux:['https://icecast.radiofrance.fr/fip-midfi.mp3','https://icecast.radiofrance.fr/fip-hifi.aac','https://direct.fipradio.fr/live/fip-midfi.mp3'], cherche:'FIP' },
     { nom:'ici Drôme Ardèche', flux:['https://icecast.radiofrance.fr/francebleudromeardeche-midfi.mp3'], cherche:'Drome Ardeche' }
   ];
   var ICO_PLAY = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.5-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5z"/></svg>';
