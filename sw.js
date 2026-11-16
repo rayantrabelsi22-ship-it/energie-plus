@@ -1,7 +1,7 @@
 // Hub Énergie+ : permet d'installer l'application et de l'ouvrir même sans connexion.
 // Toujours la version en ligne d'abord (les mises à jour arrivent toutes seules),
 // la copie gardée en mémoire seulement si internet est coupé.
-const CACHE = 'energie-plus-v3';
+const CACHE = 'energie-plus-v4';
 const FICHIERS = ['./', 'index.html', 'manifest.webmanifest', 'favicon.ico',
   'icons/icon-192.png', 'icons/icon-512.png', 'icons/icon-maskable-512.png',
   'icons/apple-touch-icon.png', 'icons/favicon-32.png',
