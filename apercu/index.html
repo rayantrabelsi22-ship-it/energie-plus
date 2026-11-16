@@ -1,0 +1,359 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Énergie+</title>
+<meta name="description" content="Le hub Énergie+ : tous les outils de l'entreprise au même endroit.">
+<meta name="theme-color" content="#0b2545">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Énergie+">
+<link rel="preload" href="fonts/outfit-latin.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+  @font-face{font-family:"Outfit";font-style:normal;font-weight:400 800;font-display:swap;
+    src:url(fonts/outfit-latin.woff2) format("woff2");
+    unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+  @font-face{font-family:"Outfit";font-style:normal;font-weight:400 800;font-display:swap;
+    src:url(fonts/outfit-latin-ext.woff2) format("woff2");
+    unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C4,U+2113,U+2C60-2C7F,U+A720-A7FF}
+
+  :root{
+    --nuit:#0b2545; --nuit-2:#13315c;
+    --vert:#2eaa3f; --vert-clair:#e6f6e8;
+    --bleu:#1f6fd1; --bleu-clair:#e5effb;
+    --orange:#e8590c; --orange-clair:#fdebe1;
+    --violet:#6741d9; --violet-clair:#eee9fc;
+    --rose:#d6336c; --rose-clair:#fbe6ee;
+    --gris:#495a6e; --gris-clair:#edf1f5;
+    --fond:#f2f4f7; --carte:#ffffff; --texte:#0f1f33; --doux:#5f6f82; --bord:#e1e6ec;
+    --ombre:0 1px 2px rgba(15,31,51,.06), 0 6px 18px rgba(15,31,51,.06);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    font-family:"Outfit","Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;
+    color:var(--texte);background:var(--fond);min-height:100vh;
+    -webkit-font-smoothing:antialiased;
+  }
+  /* Image de fond optionnelle (ex. design Leonardo) : déposer img/fond.jpg et décommenter
+  body{background:var(--fond) url(img/fond.jpg) center top / cover fixed no-repeat}
+  */
+  .page{max-width:1200px;margin:0 auto;padding:24px 28px 36px}
+
+  /* ---------- Bandeau ---------- */
+  .bandeau{
+    display:grid;grid-template-columns:1fr 400px;min-height:400px;
+    background:var(--carte);border-radius:28px;overflow:hidden;box-shadow:var(--ombre);border:1px solid var(--bord);
+  }
+  .accueil{padding:30px 36px 30px;display:flex;flex-direction:column}
+  .accueil .logo{width:min(300px,100%);height:auto;display:block;margin:-4px 0 22px -4px}
+  .accueil h1{margin:0;font-size:clamp(34px,4.2vw,50px);font-weight:700;letter-spacing:-1px;line-height:1.05}
+  .accueil h1 .main{display:inline-block;transform-origin:70% 70%;animation:coucou 2.2s ease-in-out .6s 1}
+  @keyframes coucou{0%,100%{transform:rotate(0)}15%,45%{transform:rotate(16deg)}30%,60%{transform:rotate(-8deg)}}
+  .accueil .date{margin:6px 0 0;font-size:19px;color:var(--doux)}
+  .accueil .date::first-letter{text-transform:uppercase}
+
+  .widgets{margin-top:auto;padding-top:24px;display:grid;grid-template-columns:auto 1fr;gap:14px}
+  .horloge{background:var(--nuit);color:#fff;border-radius:20px;padding:16px 22px;display:flex;flex-direction:column;justify-content:center}
+  .heure{font-size:48px;font-weight:600;letter-spacing:-1px;line-height:1;font-variant-numeric:tabular-nums}
+  .heure .deux-points{animation:clignote 2s steps(1) infinite}
+  @keyframes clignote{50%{opacity:.25}}
+  .horloge small{margin-top:6px;font-size:13px;opacity:.7}
+  .meteo{background:var(--bleu-clair);border-radius:20px;padding:14px 16px;display:flex;align-items:center;gap:16px;min-width:0}
+  .maintenant{display:flex;align-items:center;gap:10px;min-width:0;flex:none}
+  .maintenant svg{width:44px;height:44px;flex:none}
+  .maintenant .temp{font-size:32px;font-weight:600;line-height:1}
+  .maintenant .ciel{font-size:13px;color:var(--doux);white-space:nowrap}
+  .jours{display:flex;gap:6px;margin-left:auto}
+  .jour{text-align:center;font-size:12px;color:var(--doux);padding:6px 6px;border-radius:12px;background:rgba(255,255,255,.75);min-width:52px}
+  .jour svg{width:22px;height:22px;display:block;margin:3px auto}
+  .jour .mm{font-weight:600;font-size:13px;color:var(--texte)}
+  .jour .mm span{color:var(--doux);font-weight:400}
+
+  .photo{position:relative;background:#cfd6de url(img/camion.jpg) 50% 50% / cover no-repeat}
+  .lieu{position:absolute;left:16px;bottom:16px;font-size:13px;color:#fff;background:rgba(11,37,69,.72);padding:7px 13px;border-radius:999px;backdrop-filter:blur(6px);display:flex;gap:6px;align-items:center}
+  .lieu svg{width:14px;height:14px}
+
+  /* ---------- Rubriques ---------- */
+  .rubrique{margin-top:34px}
+  .rubrique-titre{display:flex;align-items:baseline;gap:12px;margin:0 4px 14px}
+  .rubrique-titre h2{margin:0;font-size:22px;font-weight:700;letter-spacing:-.3px}
+  .rubrique-titre p{margin:0;color:var(--doux);font-size:15px}
+
+  .grille{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+  .tuile{
+    --c:var(--bleu);--c-clair:var(--bleu-clair);
+    position:relative;display:flex;flex-direction:column;gap:14px;
+    padding:20px;border-radius:22px;background:var(--carte);border:1px solid var(--bord);box-shadow:var(--ombre);
+    color:inherit;text-decoration:none;cursor:pointer;font:inherit;text-align:left;
+    transition:transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+  }
+  .tuile:hover,.tuile:focus-visible{transform:translateY(-3px);border-color:var(--c);box-shadow:0 10px 26px rgba(15,31,51,.10);outline:none}
+  .tuile:active{transform:translateY(0)}
+  .tuile.grande{grid-column:span 2;flex-direction:row;align-items:center;gap:20px;padding:24px}
+  .ico{width:52px;height:52px;border-radius:15px;display:grid;place-items:center;background:var(--c-clair);color:var(--c);flex:none}
+  .grande .ico{width:68px;height:68px;border-radius:19px}
+  .ico svg{width:26px;height:26px}
+  .grande .ico svg{width:34px;height:34px}
+  .tuile h3{margin:0;font-size:18px;font-weight:600;letter-spacing:-.2px}
+  .grande h3{font-size:23px}
+  .tuile p{margin:4px 0 0;color:var(--doux);font-size:14px;line-height:1.4}
+  .grande p{font-size:15px}
+  .fleche{position:absolute;top:18px;right:18px;width:18px;height:18px;color:#a9b4c2;transition:color .15s, transform .15s}
+  .grande .fleche{position:static;margin-left:auto;width:24px;height:24px}
+  .tuile:hover .fleche{color:var(--c);transform:translate(2px,-2px)}
+  .copier .fleche{transform:none!important}
+
+  .vert{--c:var(--vert);--c-clair:var(--vert-clair)}
+  .bleu{--c:var(--bleu);--c-clair:var(--bleu-clair)}
+  .orange{--c:var(--orange);--c-clair:var(--orange-clair)}
+  .violet{--c:var(--violet);--c-clair:var(--violet-clair)}
+  .rose{--c:var(--rose);--c-clair:var(--rose-clair)}
+  .gris{--c:var(--gris);--c-clair:var(--gris-clair)}
+  .nuit{--c:var(--nuit);--c-clair:#e3e8f0}
+
+  footer{margin-top:38px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;color:var(--doux);font-size:13px}
+  footer a{color:var(--doux)}
+
+  .toast{position:fixed;left:50%;bottom:28px;transform:translate(-50%,20px);opacity:0;pointer-events:none;
+    background:var(--nuit);color:#fff;padding:12px 18px;border-radius:14px;font-size:15px;box-shadow:0 10px 30px rgba(0,0,0,.25);
+    transition:opacity .2s, transform .2s;display:flex;gap:10px;align-items:center}
+  .toast.visible{opacity:1;transform:translate(-50%,0)}
+  .toast svg{width:18px;height:18px;color:#69db7c}
+
+  @media (max-width:1000px){
+    .grille{grid-template-columns:repeat(2,1fr)}
+    .bandeau{grid-template-columns:1fr}
+    .photo{min-height:360px;order:-1}
+  }
+  @media (max-width:600px){
+    .page{padding:14px 14px 28px}
+    .rubrique-titre{flex-direction:column;gap:2px}
+    .accueil{padding:24px 22px}
+    .accueil .logo{width:240px}
+    .grille{grid-template-columns:1fr 1fr;gap:12px}
+    .tuile.grande{grid-column:span 2;padding:18px;gap:14px}
+    .tuile{padding:16px}
+    .widgets{grid-template-columns:1fr}
+    .meteo{flex-wrap:wrap}
+    .jours{width:100%;margin-left:0}
+    .jour{flex:1}
+    .heure{font-size:40px}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ===================== BANDEAU ===================== -->
+  <header class="bandeau">
+    <div class="accueil">
+      <img class="logo" src="img/logo.webp" alt="Énergie+" width="1100" height="365">
+      <h1><span id="salut">Bonjour</span> Roujdi <span class="main" aria-hidden="true">👋</span></h1>
+      <p class="date" id="date"></p>
+      <div class="widgets">
+        <div class="horloge">
+          <div class="heure" id="heure">--<span class="deux-points">:</span>--</div>
+          <small>Saint-Rambert-d'Albon</small>
+        </div>
+        <div class="meteo">
+          <div class="maintenant" id="maintenant"><div><div class="temp">--°</div><div class="ciel">Météo…</div></div></div>
+          <div class="jours" id="jours"></div>
+        </div>
+      </div>
+    </div>
+    <div class="photo" role="img" aria-label="Le camion Énergie+">
+      <span class="lieu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>Drôme · Isère · Ardèche</span>
+    </div>
+  </header>
+
+  <!--
+    LES BOUTONS
+    - Bouton qui ouvre un lien : <a class="tuile COULEUR" href="LIEN" target="_blank" rel="noopener"> … </a>
+    - Bouton qui copie un lien : <button class="tuile copier COULEUR" data-copier="LIEN"> … </button>
+    COULEUR = vert, bleu, orange, violet, rose, gris, nuit. Ajouter « grande » pour un gros bouton.
+    Aucun mot de passe ni donnée client ici : seulement des liens.
+  -->
+
+  <!-- ===================== TOUS LES JOURS ===================== -->
+  <section class="rubrique">
+    <div class="rubrique-titre"><h2>Tous les jours</h2><p>Les clients, les demandes, les chantiers</p></div>
+    <div class="grille">
+
+      <a class="tuile grande vert" href="https://docs.google.com/spreadsheets/d/1dnahwnAETlx90utTt23mJqTqj0oD07suFIIW9ZBgYbA/edit" target="_blank" rel="noopener">
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-6l-2 3h-4l-2-3H2"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></svg></span>
+        <span><h3>Demandes du site</h3><p>Les nouvelles demandes de devis, avec le numéro pour rappeler.</p></span>
+        <svg class="fleche" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg>
+      </a>
+
+      <a class="tuile grande bleu" href="https://docs.google.com/spreadsheets/d/1Rg6x6yStGdD1_oESrwj2IPvQow0W2Gph6xZjkkZqfb8/edit" target="_blank" rel="noopener">
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></span>
+        <span><h3>Suivi des dossiers</h3><p>Visites, devis, acomptes, chantiers : ce qu'il y a à faire pour chaque client.</p></span>
+        <svg class="fleche" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg>
+      </a>
+
+      <button class="tuile copier orange" data-copier="https://www.energiecvc.com/devis-gratuit" type="button">
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></span>
+        <span><h3>Lien du devis gratuit</h3><p>Un clic pour le copier, puis le coller dans un SMS.</p></span>
+      </button>
+
+      <a class="tuile rose" href="https://business.google.com/" target="_blank" rel="noopener">
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
+        <span><h3>Fiche Google</h3><p>Les avis, les appels, les photos.</p></span>
+        <svg class="fleche" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg>
+      </a>
+
+      <a class="tuile nuit" href="https://www.energiecvc.com" target="_blank" rel="noopener">
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></span>
+        <span><h3>Notre site</h3><p>energiecvc.com</p></span>
+        <svg class="fleche" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg>
+      </a>
+
+      <button class="tuile copier vert" data-copier="07 60 19 86 06" type="button">
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
+        <span><h3>Notre numéro</h3><p>07 60 19 86 06 · clic pour copier</p></span>
+      </button>
+
+    </div>
+  </section>
+
+  <!-- ===================== MARKETING ===================== -->
+  <section class="rubrique">
+    <div class="rubrique-titre"><h2>Marketing</h2><p>Vidéos, réseaux et site</p></div>
+    <div class="grille">
+
+      <a class="tuile nuit" href="https://www.tiktok.com/tiktokstudio" target="_blank" rel="noopener">
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V2a5 5 0 0 0 5 5"/></svg></span>
+        <span><h3>TikTok Studio</h3><p>Publier et voir les stats.</p></span>
+        <svg class="fleche" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg>
+      </a>
+
+      <a class="tuile violet" href="https://elevenlabs.io/app" target="_blank" rel="noopener">
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><path d="M12 19v3"/></svg></span>
+        <span><h3>ElevenLabs</h3><p>Les voix des vidéos.</p></span>
+        <svg class="fleche" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg>
+      </a>
+
+      <a class="tuile orange" href="https://app.leonardo.ai/" target="_blank" rel="noopener">
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.09-3.09a2 2 0 0 0-2.82 0L6 21"/></svg></span>
+        <span><h3>Leonardo</h3><p>Les images générées.</p></span>
+        <svg class="fleche" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg>
+      </a>
+
+      <a class="tuile bleu" href="https://hpanel.hostinger.com/" target="_blank" rel="noopener">
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></span>
+        <span><h3>Modifier le site</h3><p>Hostinger.</p></span>
+        <svg class="fleche" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg>
+      </a>
+
+    </div>
+  </section>
+
+  <footer>
+    <span>Énergie+ · Chauffage · Climatisation · Saint-Rambert-d'Albon</span>
+    <span id="maj"></span>
+  </footer>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+  <span id="toast-texte">Copié !</span>
+</div>
+
+<script>
+(function(){
+  var $ = function(id){ return document.getElementById(id); };
+
+  /* ---------- Date, salutation, horloge ---------- */
+  function majHeure(){
+    var d = new Date();
+    var h = String(d.getHours()).padStart(2,'0'), m = String(d.getMinutes()).padStart(2,'0');
+    $('heure').innerHTML = h + '<span class="deux-points">:</span>' + m;
+    $('date').textContent = d.toLocaleDateString('fr-FR',{weekday:'long', day:'numeric', month:'long'});
+    var hh = d.getHours();
+    $('salut').textContent = (hh >= 18 || hh < 4) ? 'Bonsoir' : 'Bonjour';
+  }
+  majHeure();
+  setInterval(majHeure, 15000);
+
+  /* ---------- Météo (Open-Meteo, gratuit, sans compte) ---------- */
+  var ICONES = {
+    soleil:'<svg viewBox="0 0 24 24" fill="none" stroke="#fab005" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.5" fill="#fab005"/><path d="M12 1.5v2M12 20.5v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1.5 12h2M20.5 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"/></svg>',
+    lune:'<svg viewBox="0 0 24 24"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5z" fill="#f5b700"/></svg>',
+    eclaircie:'<svg viewBox="0 0 24 24"><circle cx="8.5" cy="8.5" r="4" fill="#fab005"/><path d="M7 19h10a4 4 0 0 0 .5-7.97A5.5 5.5 0 0 0 7 12.5 3.25 3.25 0 0 0 7 19z" fill="#b8c4d2"/></svg>',
+    nuage:'<svg viewBox="0 0 24 24"><path d="M6.5 19h11a4.5 4.5 0 0 0 .6-8.96A6 6 0 0 0 6.6 11 4 4 0 0 0 6.5 19z" fill="#b8c4d2"/></svg>',
+    brouillard:'<svg viewBox="0 0 24 24" fill="none" stroke="#98a6b8" stroke-width="2" stroke-linecap="round"><path d="M4 9h16M2 13h20M5 17h14"/></svg>',
+    bruine:'<svg viewBox="0 0 24 24"><path d="M6.5 15h11a4.5 4.5 0 0 0 .6-8.96A6 6 0 0 0 6.6 7 4 4 0 0 0 6.5 15z" fill="#b8c4d2"/><path d="M8 18v1.5M12 18v1.5M16 18v1.5" stroke="#74c0fc" stroke-width="2" stroke-linecap="round"/></svg>',
+    pluie:'<svg viewBox="0 0 24 24"><path d="M6.5 14h11a4.5 4.5 0 0 0 .6-8.96A6 6 0 0 0 6.6 6 4 4 0 0 0 6.5 14z" fill="#a3b1c2"/><path d="M8 17l-1 3M12 17l-1 3M16 17l-1 3" stroke="#4dabf7" stroke-width="2" stroke-linecap="round"/></svg>',
+    neige:'<svg viewBox="0 0 24 24"><path d="M6.5 14h11a4.5 4.5 0 0 0 .6-8.96A6 6 0 0 0 6.6 6 4 4 0 0 0 6.5 14z" fill="#b8c4d2"/><g fill="#a5d8ff"><circle cx="8" cy="18" r="1.4"/><circle cx="12" cy="20" r="1.4"/><circle cx="16" cy="18" r="1.4"/></g></svg>',
+    orage:'<svg viewBox="0 0 24 24"><path d="M6.5 14h11a4.5 4.5 0 0 0 .6-8.96A6 6 0 0 0 6.6 6 4 4 0 0 0 6.5 14z" fill="#adb5bd"/><path d="M13 13l-3 5h3l-2 4" fill="none" stroke="#fab005" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+  };
+  function ciel(code, jour){
+    if (code === 0) return [jour === 0 ? 'lune' : 'soleil', 'Ciel dégagé'];
+    if (code === 1) return [jour === 0 ? 'lune' : 'soleil', 'Plutôt ensoleillé'];
+    if (code === 2) return ['eclaircie', 'Éclaircies'];
+    if (code === 3) return ['nuage', 'Couvert'];
+    if (code === 45 || code === 48) return ['brouillard', 'Brouillard'];
+    if (code >= 51 && code <= 57) return ['bruine', 'Bruine'];
+    if ((code >= 61 && code <= 67) || (code >= 80 && code <= 82)) return ['pluie', 'Pluie'];
+    if ((code >= 71 && code <= 77) || code === 85 || code === 86) return ['neige', 'Neige'];
+    if (code >= 95) return ['orage', 'Orage'];
+    return ['nuage', 'Nuageux'];
+  }
+  function afficherMeteo(m){
+    var c = m.current, d = m.daily;
+    var now = ciel(c.weather_code, c.is_day);
+    $('maintenant').innerHTML = ICONES[now[0]] +
+      '<div><div class="temp">' + Math.round(c.temperature_2m) + '°</div>' +
+      '<div class="ciel">' + now[1] + '</div><div class="ciel">Ressenti ' + Math.round(c.apparent_temperature) + '°</div></div>';
+    var noms = ["Auj.", "Dem."];
+    var html = '';
+    for (var i = 0; i < 3; i++) {
+      var nom = noms[i] || new Date(d.time[i] + 'T12:00').toLocaleDateString('fr-FR',{weekday:'short'}).replace('.', '');
+      html += '<div class="jour">' + nom.charAt(0).toUpperCase() + nom.slice(1) + ICONES[ciel(d.weather_code[i], 1)[0]] +
+        '<div class="mm">' + Math.round(d.temperature_2m_max[i]) + '° <span>' + Math.round(d.temperature_2m_min[i]) + '°</span></div></div>';
+    }
+    $('jours').innerHTML = html;
+  }
+  function chargerMeteo(){
+    var url = 'https://api.open-meteo.com/v1/forecast?latitude=45.2867&longitude=4.8114' +
+      '&current=temperature_2m,apparent_temperature,weather_code,is_day' +
+      '&daily=weather_code,temperature_2m_max,temperature_2m_min&timezone=Europe%2FParis&forecast_days=3';
+    fetch(url).then(function(r){ return r.json(); }).then(function(m){
+      afficherMeteo(m);
+      try { localStorage.setItem('meteo', JSON.stringify(m)); } catch(e){}
+    }).catch(function(){
+      try { var m = JSON.parse(localStorage.getItem('meteo')); if (m) afficherMeteo(m); } catch(e){}
+    });
+  }
+  chargerMeteo();
+  setInterval(chargerMeteo, 30 * 60 * 1000);
+
+  /* ---------- Boutons « copier » ---------- */
+  var minuteur;
+  function toast(texte){
+    $('toast-texte').textContent = texte;
+    $('toast').classList.add('visible');
+    clearTimeout(minuteur);
+    minuteur = setTimeout(function(){ $('toast').classList.remove('visible'); }, 2200);
+  }
+  document.querySelectorAll('[data-copier]').forEach(function(b){
+    b.addEventListener('click', function(){
+      var t = b.getAttribute('data-copier');
+      (navigator.clipboard ? navigator.clipboard.writeText(t) : Promise.reject())
+        .then(function(){ toast('Copié ! Il ne reste plus qu’à coller (Ctrl + V).'); })
+        .catch(function(){ toast('À copier : ' + t); });
+    });
+  });
+
+  /* ---------- Application installable ---------- */
+  /* (aperçu : pas d'installation) */
+})();
+</script>
+</body>
+</html>
