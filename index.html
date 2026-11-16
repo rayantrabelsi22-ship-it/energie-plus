@@ -128,7 +128,7 @@
   </header>
 
   <section class="bonjour">
-    <h2 id="salut">Bonjour !</h2>
+    <h2 id="salut">Bonjour Roujdi !</h2>
     <p>Où voulez-vous aller ?</p>
   </section>
 
@@ -182,7 +182,7 @@
     var date = d.toLocaleDateString('fr-FR', { day:'numeric', month:'long', year:'numeric' });
     document.getElementById('date').innerHTML = '<strong>' + jour + '</strong>' + date;
     var h = d.getHours();
-    document.getElementById('salut').textContent = (h >= 18 || h < 4) ? 'Bonsoir !' : 'Bonjour !';
+    document.getElementById('salut').textContent = (h >= 18 || h < 4) ? 'Bonsoir Roujdi !' : 'Bonjour Roujdi !';
   })();
 
   // Rend la page installable comme une application
